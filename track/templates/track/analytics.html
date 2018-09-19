@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Analytics</title>
+    </head>
+
+    <body>
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Page</th>
+                <th>IP</th>
+                <th>Referer</th>
+            </tr>
+            {% for visit in visits %}
+            <tr>
+                <td>{{ visit.datetime }}</td>
+                <td>{{ visit.path }}</td>
+                <td>{{ visit.IP }}</td>
+                <td>{{ visit.referer }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

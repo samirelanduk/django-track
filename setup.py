@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
  name="django-track",
@@ -19,6 +19,7 @@ setup(
   "Programming Language :: Python :: 3.7",
  ],
  keywords="django analytics logging",
- packages=["track"],
- install_requires=[]
+ packages=find_packages(),
+ include_package_data=True,
+ install_requires=["django==2.0"]
 )
