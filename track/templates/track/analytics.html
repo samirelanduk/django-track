@@ -1,24 +1,114 @@
-<html>
-    <head>
-        <title>Analytics</title>
-    </head>
+<!doctype html>
 
-    <body>
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>Page</th>
-                <th>IP</th>
-                <th>Referer</th>
-            </tr>
-            {% for visit in visits %}
-            <tr>
-                <td>{{ visit.datetime }}</td>
-                <td>{{ visit.path }}</td>
-                <td>{{ visit.IP }}</td>
-                <td>{{ visit.referer }}</td>
-            </tr>
+<html lang="en">
+<head>
+    <title>Analytics</title>
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans'
+      rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            font-family: "Work Sans";
+            margin: 0px;
+        }
+        header {
+            text-align: center;
+            font-size: 120%;
+            padding: 10px;
+            background-color: #57606f;
+            color: #ffffff;
+        }
+
+        main {
+            padding: 10px;
+        }
+
+        .hit-count {
+            text-align: center;
+            padding: 15px;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            font-size: 80%;
+        }
+
+        table.histogram {
+            width: 80%;
+            margin-bottom: 50px;
+        }
+
+        .histogram tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .histogram tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .histogram th {
+            padding: 8px;
+            font-size: 110%;
+        }
+
+        .histogram td {
+            padding: 3px;
+        }
+
+        .histogram td:first-child {
+            width: 80%;
+        }
+
+        .all-hits {
+            overflow-y: scroll;
+            height: 200px;
+            font-size: 70%;
+        }
+
+        .all-hits table {
+            border: 1px solid #f0f0f0;
+            width: 80%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>{{ date }}</header>
+
+    <main>
+        <div class="hit-count">{{ visits|length }} page hit{{ visits|length|pluralize }} on this day.</div>
+
+        <div class="histograms">
+            {% for histogram in histograms %}
+                <table class="histogram">
+                    <tr><th colspan="2">{{ histogram.1.title }}</th></tr>
+                    {% for param, count in histogram.0 %}
+                    <tr><td>{{ param }}</td><td>{{ count }}</td></tr>
+                    {% endfor %}
+                </table>
             {% endfor %}
-        </table>
-    </body>
+        </div>
+
+        <div class="all-hits">
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Path</th>
+                    <th>City</th>
+                    <th>Source</th>
+                </tr>
+                {% for visit in visits %}
+                <tr>
+                    <td>{{ visit.time }}</td>
+                    <td>{{ visit.path }}</td>
+                    <td>{{ visit.city }}</td>
+                    <td>{{ visit.referer }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+</body>
+
 </html>
