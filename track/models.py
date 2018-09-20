@@ -5,8 +5,6 @@ import pytz
 from django.db import models
 from django.contrib.gis.geoip2 import GeoIP2
 
-DL = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/track/data"
-
 class Visit(models.Model):
 
     class Meta:
@@ -35,7 +33,7 @@ class Visit(models.Model):
             return self.country_lookups[self.IP]
         except:
             try:
-                country = GeoIP2(path=DL).country(self.IP)["country_name"]
+                country = GeoIP2().country(self.IP)["country_name"]
             except: country = "Unknown"
             self.country_lookups[self.IP] = country
             return country
@@ -47,7 +45,7 @@ class Visit(models.Model):
             return self.city_lookups[self.IP]
         except:
             try:
-                city = GeoIP2(path=DL).city(self.IP)["city"]
+                city = GeoIP2().city(self.IP)["city"]
             except: city = "Unknown"
             self.city_lookups[self.IP] = city
             return city
