@@ -24,7 +24,8 @@ def analytics(request):
     data = [{
      "hour": v.time.hour, "minute": v.time.minute,
      "second": v.time.second,
-     "seconds": (v.time.hour * 3600) + (v.time.minute * 60) + v.time.second
+     "seconds": (v.time.hour * 3600) + (v.time.minute * 60) + v.time.second,
+     "path": v.path, "country": v.country, "city": v.city
     } for v in visits]
 
     return render(request, "track/analytics.html", {

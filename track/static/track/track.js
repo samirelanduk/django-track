@@ -10,19 +10,28 @@ function secondsToString(s) {
     return hour + minutes + " " + suffix;
 }
 
-function visitsToData(visits, period) {
+function visitsToData(visits, period, param, value) {
     var data = [[0, 0]];
     while (data[data.length - 1][0] < S_IN_D) {
         data.push([data[data.length - 1][0] + period * 60, 0])
     }
-    for (var v = 0; v < visits.length - 1; v++) {
+    for (var v = 0; v < visits.length; v++) {
         for (var d = 0; d < data.length; d++) {
-            if ((visits[v].seconds > data[d][0]) && (visits[v].seconds < data[d + 1][0])) {
-                data[d][1]++
+            if ((visits[v].seconds >= data[d][0]) && (visits[v].seconds < data[d + 1][0])) {
+                if ((!(param)) || (visits[v][param] == value)) {
+                    data[d][1]++
+                }
+
             }
         }
     }
     return data;
+}
+
+function clearRowBackgrounds() {
+    $("tr").each(function() {
+        $(this).removeAttr("style");
+    });
 }
 
 
@@ -57,14 +66,17 @@ $(document).ready(function() {
         },
         series: [{
             type: "column",
+            color: "#10ac84",
             data: data,
         }],
         plotOptions: {
             column: {
-                groupPadding: 0,
+                grouping: false,
+                groupPadding: 0.05,
                 pointPadding: 0,
                 gapSize: 0,
-                pointPlacement: "between"
+                pointPlacement: "between",
+                borderWidth: 0
             }
         },
         tooltip: {
@@ -97,6 +109,54 @@ $(document).ready(function() {
 
     $("#chartIntervalSelector").change(function() {
         var data = visitsToData(visits, parseInt($(this).val()));
-        chart.series[0].setData(data);
+        var subtitle = chart.subtitle.element.innerHTML.slice(7, -8).split(": ");
+        console.log(subtitle)
+        while (chart.series.length != 0) {
+            chart.series[0].remove();
+        }
+        if (subtitle.length != 2) {
+            console.log("Just adding 1")
+            chart.addSeries({data: data, type: "column", color: "#10ac84"});
+        } else {
+            console.log("Adding 2")
+            var data2 = visitsToData(visits, parseInt($(this).val()), subtitle[0].toLowerCase(), subtitle[1]);
+            chart.addSeries({data: data, type: "column", color: "#10ac8433"});
+            chart.addSeries({data: data2, type: "column", color: "#10ac84"});
+        }
+    })
+
+    $("#clearSecondSeries").click(function() {
+        clearRowBackgrounds();
+        chart.series[1].remove();
+        $(this).addClass("invisible");
+        chart.series[0].options.color = "#10ac84";
+        chart.series[0].update(chart.series[0].options);
+        chart.setTitle(null, {
+             text: null
+         });
+    })
+
+    $(".param-row").click(function() {
+        var param = $(this).attr("data-param");
+        var value = $(this).find("td:eq(0)").text();
+
+        clearRowBackgrounds();
+        $(this).css("background-color", "#10ac8455");
+
+        if (chart.series.length > 1) {
+            chart.series[1].remove();
+        }
+        chart.series[0].options.color = "#10ac8433";
+        chart.series[0].update(chart.series[0].options);
+
+        var interval = parseInt($("#chartIntervalSelector").val())
+
+        data = visitsToData(visits, interval, param, value);
+        chart.addSeries({data: data, type: "column", color: "#10ac84"});
+        chart.setTitle(null, {
+             text: param[0].toUpperCase() + param.slice(1) + ": " + value
+         });
+
+         $("#clearSecondSeries").removeClass("invisible");
     })
 })

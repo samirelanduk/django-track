@@ -20,19 +20,22 @@
                 <table class="histogram">
                     <tr><th colspan="2">{{ histogram.1.title }}</th></tr>
                     {% for param, count in histogram.0 %}
-                    <tr><td>{{ param }}</td><td>{{ count }}</td></tr>
+                    <tr class="param-row" data-param="{{ histogram.1 }}"><td>{{ param }}</td><td>{{ count }}</td></tr>
                     {% endfor %}
                 </table>
             {% endfor %}
         </div>
 
         <div id="visits-chart"></div>
-        <select id="chartIntervalSelector">
-            <option value="15">15 minutes</option>
-            <option value="20">20 minutes</option>
-            <option value="30" selected>30 minutes</option>
-            <option value="60">1 hour</option>
-        </select>
+        <div class="controls">
+            <select id="chartIntervalSelector">
+                <option value="15">15 minutes</option>
+                <option value="20">20 minutes</option>
+                <option value="30" selected>30 minutes</option>
+                <option value="60">1 hour</option>
+            </select>
+            <button id="clearSecondSeries" class="invisible">Clear</button>
+        </div>
 
         <div class="all-hits">
             <table>

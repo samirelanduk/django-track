@@ -32,11 +32,20 @@ table.histogram {
     margin-bottom: 50px;
 }
 
+.histogram tr {
+    transition: 0.5s;
+}
+
 .histogram tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 .histogram tr:nth-child(odd) {
     background-color: #f2f2f2;
+}
+
+.histogram tr:hover {
+    cursor: pointer;
+    background-color: #10ac8455;
 }
 
 .histogram th {
@@ -57,14 +66,23 @@ table.histogram {
     margin-bottom: 10px;
 }
 
-#chartIntervalSelector {
-    margin-bottom: 50px;
-    padding: 10px;
+#chartIntervalSelector, #clearSecondSeries {
     display: block;
     margin-left: auto;
     margin-right: auto;
     font-size: 110%;
     cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.controls {
+    margin-bottom: 50px;
+}
+
+button.invisible {
+    display: none !important;
 }
 
 .all-hits {
