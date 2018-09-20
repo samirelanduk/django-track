@@ -1,0 +1,78 @@
+body {
+    font-family: "Work Sans";
+    margin: 0px;
+}
+header {
+    text-align: center;
+    font-size: 120%;
+    padding: 10px;
+    background-color: #57606f;
+    color: #ffffff;
+}
+
+main {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+
+.hit-count {
+    text-align: center;
+    padding: 15px;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 80%;
+    width: 100%;
+}
+
+table.histogram {
+    margin-bottom: 50px;
+}
+
+.histogram tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.histogram tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.histogram th {
+    padding: 8px;
+    font-size: 110%;
+}
+
+.histogram td {
+    padding: 3px;
+}
+
+.histogram td:first-child {
+    width: 80%;
+}
+
+#visits-chart {
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+#chartIntervalSelector {
+    margin-bottom: 50px;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 110%;
+    cursor: pointer;
+}
+
+.all-hits {
+    overflow-y: scroll;
+    height: 200px;
+    font-size: 70%;
+}
+
+.all-hits table {
+    border: 1px solid #f0f0f0;
+}

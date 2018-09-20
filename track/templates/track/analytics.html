@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 
 <html lang="en">
@@ -5,80 +6,7 @@
     <title>Analytics</title>
     <link href='https://fonts.googleapis.com/css?family=Work+Sans'
       rel='stylesheet' type='text/css'>
-    <style>
-        body {
-            font-family: "Work Sans";
-            margin: 0px;
-        }
-        header {
-            text-align: center;
-            font-size: 120%;
-            padding: 10px;
-            background-color: #57606f;
-            color: #ffffff;
-        }
-
-        main {
-            padding: 10px;
-        }
-
-        .hit-count {
-            text-align: center;
-            padding: 15px;
-        }
-
-        table {
-            margin-left: auto;
-            margin-right: auto;
-            border-collapse: collapse;
-            font-size: 80%;
-        }
-
-        table.histogram {
-            width: 80%;
-            margin-bottom: 50px;
-        }
-
-        .histogram tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .histogram tr:nth-child(odd) {
-            background-color: #f2f2f2;
-        }
-
-        .histogram th {
-            padding: 8px;
-            font-size: 110%;
-        }
-
-        .histogram td {
-            padding: 3px;
-        }
-
-        .histogram td:first-child {
-            width: 80%;
-        }
-
-        #visits-chart {
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 50px;
-            margin-bottom: 50px;
-        }
-
-        .all-hits {
-            overflow-y: scroll;
-            height: 200px;
-            font-size: 70%;
-        }
-
-        .all-hits table {
-            border: 1px solid #f0f0f0;
-            width: 80%;
-        }
-
-    </style>
+    <link href="{% static 'track/track.css' %}" rel="stylesheet" type='text/css'>
 </head>
 
 <body>
@@ -99,6 +27,12 @@
         </div>
 
         <div id="visits-chart"></div>
+        <select id="chartIntervalSelector">
+            <option value="15">15 minutes</option>
+            <option value="20">20 minutes</option>
+            <option value="30" selected>30 minutes</option>
+            <option value="60">1 hour</option>
+        </select>
 
         <div class="all-hits">
             <table>
@@ -122,99 +56,9 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script>
-        $(document).ready(function() {
-            var S_IN_D = 24 * 60 * 60;
-            mins = 30;
-            var data = [[0, 0]];
-            var visits = {{ data|safe }};
-            while (data[data.length - 1][0] < S_IN_D) {
-                data.push([data[data.length - 1][0] + mins * 60, 0])
-            }
-            for (var v = 0; v < visits.length - 1; v++) {
-                for (var d = 0; d < data.length; d++) {
-                    if ((visits[v].seconds > data[d][0]) && (visits[v].seconds < data[d + 1][0])) {
-                        data[d][1]++
-                    }
-                }
-            }
+    <script src="{% static 'track/track.js' %}"></script>
+    <script>var visits = {{ data|safe }}; var today = "{{ date }}"</script>
 
-            function secondsToString(s) {
-                var hour = Math.floor(s / 3600);
-                var minutes = (s - (hour * 3600)) / 60;
-                var suffix = ((hour <= 11) || (hour == 24)) ? "am" : "pm";
-                hour = hour > 12 ? hour - 12 : hour;
-                hour = hour == 0 ? 12 : hour;
-                minutes = minutes == 0 ? "" : ":" + minutes
-                return hour + minutes + " " + suffix;
-            }
-
-            chart = Highcharts.chart("visits-chart", {
-                chart: {
-                    marginLeft: 30,
-                    marginRight: 30
-                },
-                title: {
-                    text: "{{ date }}"
-                },
-                credits: {
-                    enabled: false
-                },
-                xAxis: {
-                    tickInterval: 3600,
-                    labels: {
-                        step: 3,
-                        formatter: function() {
-                            return secondsToString(this.value)
-                        }
-                    },
-                    min: 0,
-                    max: S_IN_D,
-                    title: {
-                        enabled: true,
-                        text: "Time"
-                    },
-                },
-                series: [{
-                    type: "column",
-                    data: data,
-                }],
-                plotOptions: {
-                    column: {
-                        groupPadding: 0,
-                        pointPadding: 0,
-                        gapSize: 0,
-                    }
-                },
-                tooltip: {
-                    formatter: function() {
-                        var start = this.x;
-                        var end = this.series.xData[this.series.xData.indexOf(this.x) + 1]
-                        text = "<b>" + secondsToString(start) + " - " + secondsToString(end) + "</b>"
-                        text += "<br>" + this.y + " visit" + (this.y == 1 ? "" : "s")
-                        return text
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
-                        chartOptions: {
-                            xAxis: {
-                                labels: {
-                                    step: 6
-                                }
-                            },
-                        }
-                    }]
-                }
-            });
-        })
-    </script>
 </body>
 
 </html>
