@@ -11,12 +11,11 @@ def analytics(request):
     except:
         timezone = pytz.UTC
 
-
+    now = datetime.now(timezone)
     try:
         year, month, day = [int(x) for x in request.GET["day"].split("-")]
-        now = datetime(year, month, day, tzinfo=timezone)
-    except:
-        now = datetime.now(timezone)
+        now = timezone.localize(datetime(year, month, day, now.hour, now.minute, now.second))
+    except: pass
     visits = list(Visit.from_day(now))
     for v in visits:
         v.time = (v.datetime + now.tzinfo.utcoffset(now)).time()

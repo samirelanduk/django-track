@@ -8,12 +8,19 @@ from .views import analytics
 def inspect_response(get_response):
 
     try:
-        exclude = settings.TRACK_EXCLUDE + [reverse(analytics)]
+        path_exclude = settings.TRACK_PATH_EXCLUDE + [reverse(analytics)]
     except:
-        exclude = [reverse(analytics)]
+        path_exclude = [reverse(analytics)]
+
+    try:
+        host_exclude = settings.TRACK_HOST_EXCLUDE
+    except:
+        host_exclude = []
 
     def middleware(request):
-        track = not any(re.search(p, request.path) for p in exclude)
+        track = not any(re.search(p, request.path) for p in path_exclude)
+        if track: track = request.META["HTTP_HOST"] not in host_exclude
+        
         if track:
             try:
                 if request.path.startswith("/" + settings.MEDIA_URL): track = False
