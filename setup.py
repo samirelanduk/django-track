@@ -21,5 +21,5 @@ setup(
  keywords="django analytics logging",
  packages=find_packages(),
  include_package_data=True,
- install_requires=["django==2.0", "geopip2"]
+ install_requires=["django==2.0", "geoip2"]
 )
