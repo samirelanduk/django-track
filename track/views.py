@@ -2,12 +2,15 @@ from datetime import datetime, date
 import pytz
 from collections import Counter
 from django.shortcuts import render
+from django.conf import settings
 from .models import Visit
 
 def analytics(request):
-    TZ = "Pacific/Auckland"
+    try:
+        timezone = pytz.timezone(settings.TRACK_TZ)
+    except:
+        timezone = pytz.UTC
 
-    timezone = pytz.timezone(TZ)
     now = datetime.now(timezone)
     visits = list(Visit.from_day(now))
     for v in visits:
