@@ -2,9 +2,11 @@ from datetime import datetime, date, timedelta
 import pytz
 from collections import Counter
 from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test
 from django.conf import settings
 from .models import Visit
 
+@user_passes_test(lambda u: u.is_superuser, login_url="/", redirect_field_name=None)
 def analytics(request):
     try:
         timezone = pytz.timezone(settings.TRACK_TZ)

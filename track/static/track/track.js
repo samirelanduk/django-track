@@ -6,7 +6,7 @@ function secondsToString(s) {
     var suffix = ((hour <= 11) || (hour == 24)) ? "am" : "pm";
     hour = hour > 12 ? hour - 12 : hour;
     hour = hour == 0 ? 12 : hour;
-    minutes = minutes == 0 ? "" : ":" + minutes
+    minutes = minutes == 0 ? "" : ":" + (minutes < 10 ? "0" : "") + minutes
     return hour + minutes + " " + suffix;
 }
 
