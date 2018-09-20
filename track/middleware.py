@@ -7,8 +7,10 @@ from .views import analytics
 
 def inspect_response(get_response):
 
-    exclude = settings.__dict__.get("TRACK_EXCLUDE", [])
-    exclude += [reverse(analytics)]
+    try:
+        exclude = settings.TRACK_EXCLUDE + [reverse(analytics)]
+    except:
+        exclude = [reverse(analytics)]
 
     def middleware(request):
         track = not any(re.search(p, request.path) for p in exclude)
