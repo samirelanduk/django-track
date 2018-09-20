@@ -13,17 +13,9 @@
     <header>{{ date }}</header>
 
     <main>
-        <div class="hit-count">{{ visits|length }} page hit{{ visits|length|pluralize }} on this day.</div>
+        <div class="hit-count"></div>
 
         <div class="histograms">
-            {% for histogram in histograms %}
-                <table class="histogram">
-                    <tr><th colspan="2">{{ histogram.1.title }}</th></tr>
-                    {% for param, count in histogram.0 %}
-                    <tr class="param-row" data-param="{{ histogram.1 }}"><td>{{ param }}</td><td>{{ count }}</td></tr>
-                    {% endfor %}
-                </table>
-            {% endfor %}
         </div>
 
         <div id="visits-chart"></div>
@@ -38,21 +30,13 @@
         </div>
 
         <div class="all-hits">
-            <table>
+            <table id="allHitsTable">
                 <tr>
                     <th>Time</th>
                     <th>Path</th>
                     <th>City</th>
                     <th>Source</th>
                 </tr>
-                {% for visit in visits %}
-                <tr>
-                    <td>{{ visit.time }}</td>
-                    <td>{{ visit.path }}</td>
-                    <td>{{ visit.city }}</td>
-                    <td>{{ visit.referer }}</td>
-                </tr>
-                {% endfor %}
             </table>
         </div>
     </main>

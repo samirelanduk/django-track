@@ -2,7 +2,7 @@ var S_IN_D = 24 * 60 * 60;
 
 function secondsToString(s) {
     var hour = Math.floor(s / 3600);
-    var minutes = (s - (hour * 3600)) / 60;
+    var minutes = Math.round((s - (hour * 3600)) / 60);
     var suffix = ((hour <= 11) || (hour == 24)) ? "am" : "pm";
     hour = hour > 12 ? hour - 12 : hour;
     hour = hour == 0 ? 12 : hour;
@@ -34,14 +34,39 @@ function clearRowBackgrounds() {
     });
 }
 
-
-
-
-
 $(document).ready(function() {
+    // Update hit count at top of page
+    $(".hit-count").text(visits.length + " page visit" + (visits.length == 1 ? "" : "s"));
 
+    // Frequency tables
+    var histograms = $(".histograms")
+    var params = ["Path", "Country", "City"];
+    for (var p = 0; p < params.length; p++) {
+        var counter = {}
+        for (var v = 0; v < visits.length; v++) {
+            if (visits[v][params[p].toLowerCase()] in counter) {
+                counter[visits[v][params[p].toLowerCase()]]++
+            } else {
+                counter[visits[v][params[p].toLowerCase()]] = 1
+            }
+        }
+        var data = Object.keys(counter).map(function(key) {
+            return [key, counter[key]];
+        }).sort(function(a, b) {return b[1] - a[1]});
+        var table = $("<table/>").addClass("histogram");;
+        $.each(data, function(rowIndex, r) {
+            var row = $("<tr class='param-row' data-param='" + params[p].toLowerCase() + "'></tr>");
+            $.each(r, function(colIndex, c) {
+                row.append($("<td/>").text(c));
+            });
+            table.append(row);
+        });
+        table.prepend("<tr><th colspan='2'>" + params[p] + "</th></tr>")
+        $(histograms).append(table);
+    }
+
+    // Chart
     var data = visitsToData(visits, 30);
-
     var chart = Highcharts.chart("visits-chart", {
         title: {
             text: today,
@@ -107,6 +132,14 @@ $(document).ready(function() {
         }
     });
 
+
+    // All hits
+    var table = $("#allHitsTable");
+    for (var v = 0; v < visits.length; v++) {
+        $(table).append("<tr><td>" + secondsToString(visits[v].seconds) + "</td><td>" + visits[v].path + "</td><td>" + visits[v].city + "</td><td>" + visits[v].referer + "</td></tr>")
+    }
+
+    // Events
     $("#chartIntervalSelector").change(function() {
         var data = visitsToData(visits, parseInt($(this).val()));
         var subtitle = chart.subtitle.element.innerHTML.slice(7, -8).split(": ");
