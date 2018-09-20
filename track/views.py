@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import pytz
 from collections import Counter
 from django.shortcuts import render
@@ -11,7 +11,12 @@ def analytics(request):
     except:
         timezone = pytz.UTC
 
-    now = datetime.now(timezone)
+
+    try:
+        year, month, day = [int(x) for x in request.GET["day"].split("-")]
+        now = datetime(year, month, day, tzinfo=timezone)
+    except:
+        now = datetime.now(timezone)
     visits = list(Visit.from_day(now))
     for v in visits:
         v.time = (v.datetime + now.tzinfo.utcoffset(now)).time()
@@ -26,5 +31,7 @@ def analytics(request):
 
     return render(request, "track/analytics.html", {
      "date": now.date(),
+     "yesterday": now.date() - timedelta(days=1),
+     "tomorrow": now.date() + timedelta(days=1),
      "data": data,
     })

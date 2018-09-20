@@ -13,6 +13,10 @@
     <header>{{ date }}</header>
 
     <main>
+        <nav>
+            <a href="?day={{ yesterday.year }}-{{ yesterday.month }}-{{ yesterday.day }}">Previous</a>
+            <a href="?day={{ tomorrow.year }}-{{ tomorrow.month }}-{{ tomorrow.day }}">Next</a>
+        </nav>
         <div class="hit-count"></div>
 
         <div class="histograms">

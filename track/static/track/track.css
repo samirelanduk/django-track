@@ -17,9 +17,21 @@ main {
     padding: 10px;
 }
 
+nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+}
+
+nav.a {
+    display: block;
+    text-align: center;
+}
+
 .hit-count {
     text-align: center;
-    padding: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 table {
