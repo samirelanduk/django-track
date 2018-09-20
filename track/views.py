@@ -26,7 +26,7 @@ def analytics(request):
      "hour": v.time.hour, "minute": v.time.minute,
      "second": v.time.second,
      "seconds": (v.time.hour * 3600) + (v.time.minute * 60) + v.time.second,
-     "path": v.path, "country": v.country, "city": v.city,
+     "path": v.path, "country": v.country or "Unknown", "city": v.city or "Unknown",
      "referer": v.referer or "", "IP": v.IP,
      "source": v.referer.split("/")[2] if v.referer and v.referer.count("/") > 2 else "Unknown"
     } for v in visits]

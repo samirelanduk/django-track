@@ -42,6 +42,7 @@ def inspect_response(get_response):
             ip = None
             for attempt in IP_TRY:
                 possible = request.META.get(attempt)
+                raise Exception(possible)
                 if possible:
                     ip = possible
                     break
