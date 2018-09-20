@@ -21,8 +21,15 @@ def analytics(request):
       key=lambda r: r[1], reverse=True), f) for f in ["path", "country", "city"]
     ]
 
+    data = [{
+     "hour": v.time.hour, "minute": v.time.minute,
+     "second": v.time.second,
+     "seconds": (v.time.hour * 3600) + (v.time.minute * 60) + v.time.second
+    } for v in visits]
+
     return render(request, "track/analytics.html", {
      "date": now.date(),
+     "data": data,
      "visits": visits,
      "histograms": histograms
     })
