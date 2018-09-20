@@ -13,27 +13,30 @@
     <header>{{ date }}</header>
 
     <main>
-        <nav>
-            <a href="?day={{ yesterday.year }}-{{ yesterday.month }}-{{ yesterday.day }}">Previous</a>
-            <a href="?day={{ tomorrow.year }}-{{ tomorrow.month }}-{{ tomorrow.day }}">Next</a>
-        </nav>
-        <div class="hit-count"></div>
+        <section class="nav">
+            <a href="?day={{ yesterday.year }}-{{ yesterday.month }}-{{ yesterday.day }}">Previous Day</a>
+            <a href="?day={{ tomorrow.year }}-{{ tomorrow.month }}-{{ tomorrow.day }}">Next Day</a>
+        </section>
 
-        <div class="histograms">
-        </div>
+        <section class="hit-count"></section>
 
-        <div id="visits-chart"></div>
-        <div class="controls">
-            <select id="chartIntervalSelector">
-                <option value="15">15 minutes</option>
-                <option value="20">20 minutes</option>
-                <option value="30" selected>30 minutes</option>
-                <option value="60">1 hour</option>
-            </select>
-            <button id="clearSecondSeries" class="invisible">Clear</button>
-        </div>
+        <section class="histograms">
+        </section>
 
-        <div class="all-hits">
+        <section>
+            <div id="visits-chart"></div>
+            <div class="controls">
+                <select id="chartIntervalSelector">
+                    <option value="15">15 minutes</option>
+                    <option value="20">20 minutes</option>
+                    <option value="30" selected>30 minutes</option>
+                    <option value="60">1 hour</option>
+                </select>
+                <button id="clearSecondSeries" class="invisible">Clear</button>
+            </div>
+        </section>
+
+        <section class="all-hits">
             <table id="allHitsTable">
                 <tr>
                     <th>Time</th>
@@ -42,7 +45,7 @@
                     <th>Source</th>
                 </tr>
             </table>
-        </div>
+        </section>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

@@ -26,7 +26,8 @@ def analytics(request):
      "second": v.time.second,
      "seconds": (v.time.hour * 3600) + (v.time.minute * 60) + v.time.second,
      "path": v.path, "country": v.country, "city": v.city,
-     "referer": v.referer or ""
+     "referer": v.referer or "", "IP": v.IP,
+     "source": v.referer.split("/")[2] if v.referer and v.referer.count("/") > 2 else "Unknown"
     } for v in visits]
 
     return render(request, "track/analytics.html", {

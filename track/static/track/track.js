@@ -36,11 +36,18 @@ function clearRowBackgrounds() {
 
 $(document).ready(function() {
     // Update hit count at top of page
-    $(".hit-count").text(visits.length + " page visit" + (visits.length == 1 ? "" : "s"));
+    var ips = new Set();
+    for (var v = 0; v < visits.length; v++) {
+        ips.add(visits[v].IP);
+    }
+    $(".hit-count").text(
+        visits.length + " page visit" + (visits.length == 1 ? "" : "s") +
+         " (" + ips.size + " unique IP" + (ips.length == 1 ? "" : "s") + ")"
+     );
 
     // Frequency tables
     var histograms = $(".histograms")
-    var params = ["Path", "Country", "City"];
+    var params = ["Path", "Country", "City", "Source"];
     for (var p = 0; p < params.length; p++) {
         var counter = {}
         for (var v = 0; v < visits.length; v++) {
@@ -187,9 +194,13 @@ $(document).ready(function() {
         data = visitsToData(visits, interval, param, value);
         chart.addSeries({data: data, type: "column", color: "#10ac84"});
         chart.setTitle(null, {
-             text: param[0].toUpperCase() + param.slice(1) + ": " + value
-         });
+            text: param[0].toUpperCase() + param.slice(1) + ": " + value
+        });
 
-         $("#clearSecondSeries").removeClass("invisible");
+        $("#clearSecondSeries").removeClass("invisible");
+
+        $("html, body").animate({
+            scrollTop: $("#visits-chart").parent().offset().top
+        }, 800);
     })
 })
