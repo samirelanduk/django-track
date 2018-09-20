@@ -42,7 +42,7 @@ $(document).ready(function() {
     }
     $(".hit-count").text(
         visits.length + " page visit" + (visits.length == 1 ? "" : "s") +
-         " (" + ips.size + " unique IP" + (ips.length == 1 ? "" : "s") + ")"
+         " (" + ips.size + " unique IP" + (ips.size == 1 ? "" : "s") + ")"
      );
 
     // Frequency tables
