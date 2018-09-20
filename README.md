@@ -31,3 +31,7 @@ Finally, you can customise track with various settings:
 10. ``TRACK_TZ`` will determine the putz timezone times are shown in. All times are stored in the database as UTC regardless of what this is set to. For example: ``TRACK_TZ = "Europe/London"``.
 11. ``TRACK_PATH_EXCLUDE`` can be a list of regex strings, and any request whose path matches will not be tracked. For example ``TRACK_PATH_EXCLUDE = [r"\.ico$", r"^/admin"]``.
 12. ``TRACK_HOST_EXCLUDE`` can be a list of strings, and any request for a hostname in this list will not be tracked. For example: ``TRACK_HOST_EXCLUDE = ["test.example.com", "localhost"]``.
+
+## Authentication
+
+The analytics page can only be viewed by users who are logged in as superusers.
