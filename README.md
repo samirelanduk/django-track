@@ -1,5 +1,16 @@
 # Django-Track
 
+|travis| |coveralls| |pypi|
+
+.. |travis| image:: https://api.travis-ci.org/samirelanduk/django-track.svg
+  :target: https://travis-ci.org/samirelanduk/django-track/
+
+.. |coveralls| image:: https://coveralls.io/repos/github/samirelanduk/django-track/badge.svg
+  :target: https://coveralls.io/github/samirelanduk/django-track/
+
+.. |pypi| image:: https://img.shields.io/pypi/pyversions/django-track.svg
+  :target: https://pypi.org/project/django-track/
+
 Track is a lightweight analytics plugin that provides clean, easy-to-read analytics with zero cookies.
 
 ## How to Install
