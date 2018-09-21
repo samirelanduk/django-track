@@ -107,6 +107,11 @@ $(document).ready(function() {
                 text: "Time"
             },
         },
+        yAxis: {
+            title: {
+                enabled: false
+            }
+        },
         series: [{
             type: "column",
             color: "#10ac84",
