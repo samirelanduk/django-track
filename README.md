@@ -16,7 +16,7 @@ Once you've done those four things, the bare functionality of track is enabled -
 
 That's it. Now you can to whatever URL you chose and see your page views.
 
-You will notice that every city and country is listed as 'Unknown' as it is however. track only stores IP addresses - location information is calculated from this when the analytics page is loaded, and for this you need to do some additional steps:
+You will notice that every city and country is listed as 'Unknown' as it is however. track only stores hashed IP addresses - location information is calculated from this when the request comes in, and to do this, a geolocation binary needs to be installed:
 
 7. Download two geolocation binaries from [this page](https://dev.maxmind.com/geoip/geoip2/geolite2/), - the city and countries binaries specifically.
 8. Put them somewhere in your system.
