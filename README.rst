@@ -1,4 +1,5 @@
-# Django-Track
+Django-Track
+------------
 
 |travis| |coveralls| |pypi|
 
@@ -13,7 +14,8 @@
 
 Track is a lightweight analytics plugin that provides clean, easy-to-read analytics with zero cookies.
 
-## How to Install
+How to Install
+~~~~~~~~~~~~~~
 
 1. ``$ pip install django-track``
 2. Add ``track`` to your list of installed apps.
@@ -43,6 +45,7 @@ Finally, you can customise track with various settings:
 11. ``TRACK_PATH_EXCLUDE`` can be a list of regex strings, and any request whose path matches will not be tracked. For example ``TRACK_PATH_EXCLUDE = [r"\.ico$", r"^/admin"]``.
 12. ``TRACK_HOST_EXCLUDE`` can be a list of strings, and any request for a hostname in this list will not be tracked. For example: ``TRACK_HOST_EXCLUDE = ["test.example.com", "localhost"]``.
 
-## Authentication
+Authentication
+~~~~~~~~~~~~~~
 
 The analytics page can only be viewed by users who are logged in as superusers.
