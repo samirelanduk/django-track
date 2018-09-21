@@ -8,16 +8,20 @@
     <link href='https://fonts.googleapis.com/css?family=Work+Sans'
       rel='stylesheet' type='text/css'>
     <link href="{% static 'track/track.css' %}" rel="stylesheet" type='text/css'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 
 <body>
-    <header>{{ date }}</header>
+    <header>
+        <a href="?day={{ yesterday.year }}-{{ yesterday.month }}-{{ yesterday.day }}">&#8592;</a>
+        <div class="header-text">{{ date|date:"j F, Y" }}</div>
+        <a href="?day={{ tomorrow.year }}-{{ tomorrow.month }}-{{ tomorrow.day }}">&#8594;</a>
+    </header>
+
+    <div class="dateholder"><div id="datepicker"></div></div>
 
     <main>
-        <section class="nav">
-            <a href="?day={{ yesterday.year }}-{{ yesterday.month }}-{{ yesterday.day }}">Previous Day</a>
-            <a href="?day={{ tomorrow.year }}-{{ tomorrow.month }}-{{ tomorrow.day }}">Next Day</a>
-        </section>
 
         <section class="hit-count"></section>
 
@@ -50,6 +54,7 @@
     </main>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="{% static 'track/track.js' %}"></script>
     <script>var visits = {{ data|safe }}; var today = "{{ date }}"</script>

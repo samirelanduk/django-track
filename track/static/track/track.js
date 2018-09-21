@@ -45,6 +45,17 @@ $(document).ready(function() {
          " (" + ips.size + " unique IP" + (ips.size == 1 ? "" : "s") + ")"
      );
 
+     $( "#datepicker" ).datepicker({onSelect:function(date) {
+         var values = date.split("/");
+         values = [values[2]].concat(values.slice(0, 2));
+         window.location.href = "?day=" + values.join("-");
+
+     }});
+
+     $('.header-text').on('click', function() {
+		$("#datepicker").slideToggle("fast")
+	});
+
     // Frequency tables
     var histograms = $(".histograms")
     var params = ["Path", "Country", "City", "Source"];
