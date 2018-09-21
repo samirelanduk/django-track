@@ -1,0 +1,19 @@
+language: python
+
+python:
+    - 3.6
+    - 3.5
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
+install:
+    - pip install -r requirements.txt
+
+script:
+    - coverage run --source=track runtests.py
+
+after_success:
+  - coveralls

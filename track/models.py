@@ -1,3 +1,4 @@
+"""Contains the Visit model."""
 
 import os
 from datetime import datetime, timedelta
@@ -5,6 +6,7 @@ import pytz
 from django.db import models
 
 class Visit(models.Model):
+    """A visit to the Django app."""
 
     class Meta:
         ordering = ["-datetime"]
@@ -19,6 +21,12 @@ class Visit(models.Model):
 
     @staticmethod
     def from_day(dt):
+        """Gets all the visits from a given day. The function takes an _aware_
+        datetime, and gets the visits which took place on that day, during that
+        timezone.
+
+        :param datetime dt: the aware datetime to filter by."""
+
         start = datetime(
          dt.year, dt.month, dt.day, 0, 0, 0, tzinfo=dt.tzinfo
         ).astimezone(pytz.UTC).replace(tzinfo=None)
