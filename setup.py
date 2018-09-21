@@ -10,7 +10,7 @@ setup(
  license="MIT",
  classifiers=[
   "Development Status :: 4 - Beta",
-  "Intended Audience :: SDevelopers",
+  "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Topic :: System :: Logging",
   "Programming Language :: Python :: 3",
