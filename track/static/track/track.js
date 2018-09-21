@@ -110,7 +110,8 @@ $(document).ready(function() {
         yAxis: {
             title: {
                 enabled: false
-            }
+            },
+            allowDecimals: false,
         },
         series: [{
             type: "column",

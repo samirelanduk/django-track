@@ -26,6 +26,7 @@ def inspect_response(get_response):
 
     def middleware(request):
         track = True
+        if any(re.search(p, request.path) for p in path_exclude): track = False
         if track: track = request.META["HTTP_HOST"] not in host_exclude
         if track: track = not any(a in request.META["HTTP_USER_AGENT"].lower() for a in agent_exclude)
 
