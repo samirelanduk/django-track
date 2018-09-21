@@ -15,6 +15,7 @@ class Visit(models.Model):
     referer = models.CharField(max_length=256, blank=True, null=True)
     country = models.CharField(max_length=128, blank=True, null=True)
     city = models.CharField(max_length=128, blank=True, null=True)
+    agent = models.CharField(max_length=1024, blank=True, null=True)
 
     @staticmethod
     def from_day(dt):

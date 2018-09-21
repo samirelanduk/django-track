@@ -28,7 +28,8 @@ def analytics(request):
      "seconds": (v.time.hour * 3600) + (v.time.minute * 60) + v.time.second,
      "path": v.path, "country": v.country or "Unknown", "city": v.city or "Unknown",
      "referer": v.referer or "", "IP": v.ip_hash,
-     "source": v.referer.split("/")[2] if v.referer and v.referer.count("/") > 2 else "Unknown"
+     "source": v.referer.split("/")[2] if v.referer and v.referer.count("/") > 2 else "Unknown",
+     "agent": v.agent or "Unknown"
     } for v in visits]
 
     return render(request, "track/analytics.html", {
